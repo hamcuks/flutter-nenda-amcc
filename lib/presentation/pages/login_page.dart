@@ -81,7 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Center(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.pushNamed(context, '/register'),
                       child: Text(
                         'Klik disini untuk Daftar',
                         style: NendaStyles.fontParagraph,
