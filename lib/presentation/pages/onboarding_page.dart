@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:nenda_invfest/constant.dart';
 import 'package:nenda_invfest/presentation/pages/home_page.dart';
+import 'package:nenda_invfest/presentation/widgets/app_button_widget.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -104,26 +105,12 @@ class OnboardingPage extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.only(bottom: 35),
+              child: AppButton(
                 width: 145,
                 height: 52,
-                decoration: BoxDecoration(
-                  color: kOrange,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: TextButton(
-                  child: Text(
-                    'Ayo Muncak!',
-                    style: NendaStyles.fontParagraph.copyWith(color: kWhite),
-                  ),
-                  onPressed: () => Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                    ),
-                  ),
-                ),
+                text: 'Ayo Muncak!',
+                onPressed: () =>
+                    Navigator.pushReplacementNamed(context, '/login'),
               ),
             ),
           ],
