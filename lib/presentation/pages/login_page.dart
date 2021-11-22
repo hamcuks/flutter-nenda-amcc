@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nenda_invfest/constant.dart';
+import 'package:nenda_invfest/cubit/auth/auth_cubit.dart';
 import 'package:nenda_invfest/presentation/widgets/app_button_widget.dart';
 import 'package:nenda_invfest/presentation/widgets/app_input_widget.dart';
 
@@ -14,6 +16,8 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  bool _isLoading = false;
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -25,7 +29,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -66,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 32,
                   ),
                   AppInput(
+                    isPassword: true,
                     label: 'Kata Sandi',
                     hintText: 'Kata Sandi Kamu',
                     icon: Icons.lock_outline,
@@ -74,10 +78,38 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 54,
                   ),
-                  AppButton(
-                    width: double.infinity,
-                    height: 52,
-                    text: 'Masuk',
+                  BlocConsumer<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthLoading) {
+                        _isLoading = true;
+                      } else if (state is AuthSuccess) {
+                        _isLoading = false;
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/main', (route) => false);
+                      } else if (state is AuthError) {
+                        _isLoading = false;
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(state.errorMessage.toString()),
+                          backgroundColor: Colors.black,
+                        ));
+                      }
+                    },
+                    builder: (context, state) {
+                      return AppButton(
+                        width: double.infinity,
+                        height: 52,
+                        isLoading: _isLoading,
+                        text: 'Masuk',
+                        onPressed: () {
+                          if (_emailController.text.isNotEmpty &&
+                              _passwordController.text.isNotEmpty) {
+                            context.read<AuthCubit>().signIn(
+                                email: _emailController.text,
+                                password: _passwordController.text);
+                          }
+                        },
+                      );
+                    },
                   ),
                   Center(
                     child: TextButton(
