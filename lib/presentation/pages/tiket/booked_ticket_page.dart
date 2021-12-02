@@ -1,39 +1,57 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:nenda_invfest/constant.dart';
+import 'package:nenda_invfest/cubit/navigation/navigation_cubit.dart';
+import 'package:nenda_invfest/data/model/ticket_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BookedTicketPage extends StatelessWidget {
-  const BookedTicketPage({Key? key}) : super(key: key);
+  final TicketModel data;
+  const BookedTicketPage({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kOrange,
       body: SafeArea(
-        child: Padding(
+        child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Tiket Pendakianmu",
-                style: NendaStyles.fontBold.copyWith(color: Colors.white),
-              ),
-              SizedBox(height: 32),
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    context
+                        .read<NavigationCubit>()
+                        .setNavigation(Navigation.TICKET);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/main', (route) => false);
+                  },
+                  child: Icon(
+                    Icons.arrow_back_ios,
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(
-                    children: [_ticketQR(), _ticketDivider(), _detailPendaki()],
                   ),
                 ),
-              )
-            ],
-          ),
+                SizedBox(width: 16),
+                Text(
+                  "Tiket Pendakianmu",
+                  style: NendaStyles.fontBold.copyWith(color: Colors.white),
+                ),
+              ],
+            ),
+            SizedBox(height: 32),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [_ticketQR(), _ticketDivider(), _detailPendaki()],
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -87,7 +105,7 @@ class BookedTicketPage extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "Gunung Merbabu",
+                "${data.namaGunung}",
                 style: NendaStyles.fontParagraph
                     .copyWith(fontWeight: FontWeight.w200),
               ),
@@ -104,7 +122,7 @@ class BookedTicketPage extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "Jalur Thekelan",
+                "${data.jalurPendakian}",
                 style: NendaStyles.fontParagraph
                     .copyWith(fontWeight: FontWeight.w200),
               ),
@@ -121,7 +139,7 @@ class BookedTicketPage extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "17 Agustus 2022",
+                "${data.tanggalNaik}",
                 style: NendaStyles.fontParagraph
                     .copyWith(fontWeight: FontWeight.w200),
               ),
@@ -138,7 +156,7 @@ class BookedTicketPage extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                "5",
+                "${data.jumlahPendaki}",
                 style: NendaStyles.fontParagraph
                     .copyWith(fontWeight: FontWeight.w200),
               ),

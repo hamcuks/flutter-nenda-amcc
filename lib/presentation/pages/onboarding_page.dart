@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:nenda_invfest/constant.dart';
-import 'package:nenda_invfest/presentation/pages/home_page.dart';
 import 'package:nenda_invfest/presentation/widgets/app_button_widget.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -52,7 +51,7 @@ class OnboardingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 100,
+                      height: 32,
                     ),
                     Text(
                       'Solusi muncak, tanpa ribet!',
@@ -64,7 +63,7 @@ class OnboardingPage extends StatelessWidget {
                       height: 24,
                     ),
                     Text(
-                      'Mt. Merbabu is a dormant stratovolcano in Central Java province on the Indonesian island of Java.',
+                      'Kini pesan tiket dan susun rencana pendakianmu makin mudah hanya dari ketikan jari',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -76,9 +75,12 @@ class OnboardingPage extends StatelessWidget {
                 ),
               ),
             ),
-            Image.asset('assets/images/dot-decoration.webp'),
             Positioned(
-              top: 100,
+              left: -40,
+              child: Image.asset('assets/images/dot-decoration.webp'),
+            ),
+            Positioned(
+              top: 120,
               right: 0,
               child: Image.asset('assets/images/dot-decoration.webp'),
             ),
@@ -105,12 +107,15 @@ class OnboardingPage extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: AppButton(
-                width: 145,
-                height: 52,
-                text: 'Ayo Muncak!',
-                onPressed: () =>
-                    Navigator.pushReplacementNamed(context, '/login'),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 35),
+                child: AppButton(
+                  width: 145,
+                  height: 52,
+                  text: 'Ayo Muncak!',
+                  onPressed: () =>
+                      Navigator.pushReplacementNamed(context, '/main'),
+                ),
               ),
             ),
           ],

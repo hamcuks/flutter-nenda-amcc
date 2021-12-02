@@ -6,7 +6,10 @@ class AppInput extends StatelessWidget {
   final String? label;
   final String? hintText;
   final IconData? icon;
+  final bool isPassword;
+  final TextInputType? type;
   final TextEditingController? controller;
+  final String? initialValue;
 
   const AppInput({
     Key? key,
@@ -14,6 +17,9 @@ class AppInput extends StatelessWidget {
     this.icon,
     this.controller,
     this.label,
+    this.isPassword = false,
+    this.type,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -21,14 +27,18 @@ class AppInput extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('$label', style: NendaStyles.fontMedium),
+        if (label != null) Text('$label', style: NendaStyles.fontMedium),
         SizedBox(
           height: 8,
         ),
-        TextField(
+        TextFormField(
           controller: controller,
+          obscureText: isPassword,
+          keyboardType: type == null ? TextInputType.text : type,
+          validator: (val) => (val!.isEmpty) ? 'Isi $label' : null,
           decoration: InputDecoration(
-            hintText: '$hintText',
+            hintText: hintText!.isEmpty ? '' : hintText,
+            hintStyle: NendaStyles.fontParagraph,
             border: UnderlineInputBorder(
               borderSide: BorderSide(color: kOrange, width: 2),
             ),
@@ -39,10 +49,12 @@ class AppInput extends StatelessWidget {
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(width: 2, color: Colors.black26),
             ),
-            prefixIcon: Icon(
-              icon,
-              color: kOrange,
-            ),
+            prefixIcon: (icon != null)
+                ? Icon(
+                    icon,
+                    color: kOrange,
+                  )
+                : null,
           ),
         ),
       ],

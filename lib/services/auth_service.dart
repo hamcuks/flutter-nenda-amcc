@@ -10,6 +10,7 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+      print('DBGG: $userCredential');
       UserModel user =
           await UserService().getUserById(userCredential.user!.uid);
       return user;

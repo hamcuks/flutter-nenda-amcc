@@ -1,19 +1,19 @@
 class PendakianModel {
-  PendakianModel({
-    this.id,
-    this.namaGunung,
-    this.deskripsi,
-    this.lokasiGunung,
-    this.tinggiGunung,
-    this.estimasiSummit,
-    this.kuota,
-    this.medanPendakian,
-    this.levelKesulitan,
-    this.estimasiHarga,
-    this.imagePath,
-    this.administrasi,
-    this.jalurPendakian,
-  });
+  PendakianModel(
+      {this.id,
+      this.namaGunung,
+      this.deskripsi,
+      this.lokasiGunung,
+      this.tinggiGunung,
+      this.estimasiSummit,
+      this.kuota,
+      this.medanPendakian,
+      this.levelKesulitan,
+      this.estimasiHarga,
+      this.imagePath,
+      this.administrasi,
+      this.jalurPendakian,
+      this.rating});
 
   String? id;
   String? namaGunung;
@@ -23,9 +23,10 @@ class PendakianModel {
   String? levelKesulitan;
   String? imagePath;
   int? tinggiGunung;
-  int? estimasiSummit;
+  dynamic estimasiSummit;
   int? kuota;
-  double? estimasiHarga;
+  int? estimasiHarga;
+  dynamic rating;
   List<String>? administrasi;
   List<JalurPendakian>? jalurPendakian;
 
@@ -45,10 +46,10 @@ class PendakianModel {
             json["medan_pendakian"] == null ? null : json["medan_pendakian"],
         levelKesulitan:
             json["level_kesulitan"] == null ? null : json["level_kesulitan"],
-        estimasiHarga: json["estimasiHarga"] == null
-            ? null
-            : json["estimasi_harga"].toDouble(),
+        estimasiHarga:
+            json["estimasi_harga"] == null ? null : json["estimasi_harga"],
         imagePath: json["image_path"] == null ? null : json["image_path"],
+        rating: json["rating"] == null ? null : json['rating'],
         administrasi: json["administrasi"] == null
             ? null
             : List<String>.from(json["administrasi"].map((x) => x)),
@@ -79,19 +80,27 @@ class JalurPendakian {
   JalurPendakian({
     this.namaJalur,
     this.hargaTiket,
+    this.lat,
+    this.lon,
   });
 
   String? namaJalur;
   double? hargaTiket;
+  double? lat;
+  double? lon;
 
   factory JalurPendakian.fromJson(Map<String, dynamic> json) => JalurPendakian(
         namaJalur: json["nama_jalur"] == null ? null : json["nama_jalur"],
         hargaTiket:
             json["harga_tiket"] == null ? null : json["harga_tiket"].toDouble(),
+        lat: json['lat'] == null ? 0 : json['lat'],
+        lon: json['lon'] == null ? 0 : json['lon'],
       );
 
   Map<String, dynamic> toJson() => {
         "nama_jalur": namaJalur == null ? null : namaJalur,
         "harga_tiket": hargaTiket == null ? null : hargaTiket,
+        "lat": lat,
+        "lon": lon,
       };
 }

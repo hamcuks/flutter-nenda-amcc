@@ -1,36 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:nenda_invfest/constant.dart';
+import 'package:nenda_invfest/cubit/navigation/navigation_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomBottomNavigationItem extends StatelessWidget {
   final String? iconName;
   final String? label;
-  final int? indexNav;
+  final Navigation? routeName;
+  final bool? isSelected;
 
-  const CustomBottomNavigationItem({
+  CustomBottomNavigationItem({
     Key? key,
     this.iconName,
     this.label,
-    this.indexNav,
+    this.routeName,
+    this.isSelected = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          width: 24,
-          height: 24,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/icons/$iconName.png'),
-            ),
+    return GestureDetector(
+      onTap: () {
+        context.read<NavigationCubit>().setNavigation(routeName!);
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/icons/$iconName.png',
+            width: 24,
+            height: 24,
+            color: (context.read<NavigationCubit>().state == routeName)
+                ? kOrange
+                : Colors.grey[400],
           ),
-        ),
-        SizedBox(
-          height: 8,
-        ),
-        Text('$label'),
-      ],
+          SizedBox(
+            height: 8,
+          ),
+          if (context.read<NavigationCubit>().state == routeName)
+            Text(
+              '$label',
+              style: NendaStyles.fontParagraph.copyWith(color: kOrange),
+            ),
+        ],
+      ),
     );
   }
 }

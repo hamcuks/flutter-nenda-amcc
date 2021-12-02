@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:nenda_invfest/data/model/user_model.dart';
 import 'package:nenda_invfest/services/auth_service.dart';
 import 'package:nenda_invfest/services/user_service.dart';
@@ -43,17 +44,27 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       emit(AuthLoading());
       await AuthService().signOut();
-      emit(AuthInitial());
+      emit(AuthSignOut());
     } catch (e) {
       emit(AuthError(e.toString()));
     }
   }
 
-  void getCurrentUser(String id) async {
+  void checkUser() async {
     try {
       emit(AuthLoading());
-      UserModel user = await UserService().getUserById(id);
-      emit(AuthSuccess(user));
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        UserModel userData = await UserService().getUserById(user.uid);
+        print('DBG: ${user.uid}');
+        emit(AuthSuccess(userData));
+      } else {
+        print('initial cubit');
+
+        emit(AuthInitial());
+      }
+      print(user);
     } catch (e) {
       emit(AuthError(e.toString()));
     }

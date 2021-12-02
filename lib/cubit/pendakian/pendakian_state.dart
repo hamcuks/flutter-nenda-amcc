@@ -12,12 +12,10 @@ class PendakianInitial extends PendakianState {}
 class PendakianLoading extends PendakianState {}
 
 class PendakianSuccess extends PendakianState {
-  final List<PendakianModel> pendakian;
+  final List<PendakianModel>? pendakian;
+  final List<PendakianModel>? searchPendakan;
 
-  PendakianSuccess(this.pendakian);
-
-  @override
-  List<Object> get props => [pendakian];
+  PendakianSuccess({this.pendakian, this.searchPendakan});
 }
 
 class PendakianError extends PendakianState {

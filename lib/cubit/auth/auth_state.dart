@@ -28,3 +28,5 @@ class AuthError extends AuthState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class AuthSignOut extends AuthState {}

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "488782413355",
+    "project_id": "nenda-invfest",
+    "storage_bucket": "nenda-invfest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:488782413355:android:815b4044fb2d3a799a746e",
+        "android_client_info": {
+          "package_name": "com.amcc.nenda_invfest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "488782413355-qh4l7eh6ik39frlfb49jdfse4rvtvc1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJM6y44973WyIyWiDE_l3Yl08BRYtOcnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "488782413355-qh4l7eh6ik39frlfb49jdfse4rvtvc1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
