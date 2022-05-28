@@ -20,7 +20,6 @@ class _FasilitasPageState extends State<FasilitasPage> {
   @override
   void initState() {
     requestLocationPermission();
-    getCurrentPosition();
     super.initState();
   }
 
@@ -57,6 +56,8 @@ class _FasilitasPageState extends State<FasilitasPage> {
       if (permission == LocationPermission.denied)
         return Future.error('location denied');
     }
+
+    getCurrentPosition();
   }
 
   @override

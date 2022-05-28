@@ -75,13 +75,8 @@ class _DetailPendakianPageState extends State<DetailPendakianPage> {
                 listener: (context, state) {
                   if (state is AuthInitial)
                     Navigator.pushNamed(context, '/login');
-                },
-                child: AppButton(
-                  width: double.infinity,
-                  height: 52,
-                  text: 'Lanjutkan',
-                  onPressed: () {
-                    context.read<AuthCubit>().checkUser();
+
+                  if (state is AuthSuccess) {
                     if (_jumlahPendakiController.text.isNotEmpty &&
                         _jalurPendakianController.text.isNotEmpty &&
                         _dateController.text.isNotEmpty) {
@@ -99,6 +94,14 @@ class _DetailPendakianPageState extends State<DetailPendakianPage> {
                         ),
                       );
                     }
+                  }
+                },
+                child: AppButton(
+                  width: double.infinity,
+                  height: 52,
+                  text: 'Lanjutkan',
+                  onPressed: () {
+                    context.read<AuthCubit>().checkUser();
                   },
                 ),
               )
@@ -332,7 +335,8 @@ class _DetailPendakianPageState extends State<DetailPendakianPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('Informasi Pendakian', style: NendaStyles.fontBold),
+                      Text('Informasi Administrasi',
+                          style: NendaStyles.fontBold),
                       Column(
                         children: List.from(
                           widget.data.administrasi!.map(
